@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from django.http import HttpResponse
 def index(request):
-    return HttpResponse("Hello, world. I've actually got Python 3 and Django 1.7 running on OpenShift!")
+    return HttpResponse("Congratulations!. You are running Python 3 and Django 1.7 on OpenShift!")
 
 urlpatterns = patterns('',
     # Examples:
