@@ -1,0 +1,13 @@
+#!/bin/bash
+
+APP_NAME=`cat $OPENSHIFT_REPO_DIR/app_name`
+
+source $OPENSHIFT_DATA_DIR/myvirtualenv/bin/activate
+
+# If there isn't a database already
+if [ ! -f $OPENSHIFT_REPO_DIR/$APP_NAME/db.sqlite3 ]
+then
+    "Running '/.manage.py migrate --noinput'; no admin username or password will be set."
+    $OPENSHIFT_REPO_DIR/$APP_NAME/manage.py migrate --noinput
+fi
+
