@@ -3,7 +3,7 @@ from django.contrib import admin
 
 from django.http import HttpResponse
 def index(request):
-    return HttpResponse("Congratulations!. You are running Python 3 and Django 1.7 on OpenShift!")
+    return HttpResponse("<p><b>Congratulations! You Django 1.7 with Python 3.4 running on OpenShift!</b></p><p>You can access the admin <a href='/admin'>here</a> but don't forget you must first create a superuser.</p>")
 
 urlpatterns = patterns('',
     # Examples:
