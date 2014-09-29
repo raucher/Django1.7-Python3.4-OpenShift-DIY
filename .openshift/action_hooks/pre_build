@@ -19,8 +19,8 @@ if [ ! -f $OPENSHIFT_DATA_DIR/bin/virtualenv ]; then
 fi
 
 # Check for existing virtual environment and install if there isn't one
-if [ ! -d $OPENSHIFT_DATA_DIR/myvirtualenv ]; then
-    $OPENSHIFT_DATA_DIR/bin/virtualenv -p $OPENSHIFT_DATA_DIR/bin/python3 $OPENSHIFT_DATA_DIR/myvirtualenv
+if [ ! -d $OPENSHIFT_HOMEDIR/python/virtenv/venv ]; then
+    $OPENSHIFT_DATA_DIR/bin/virtualenv -p $OPENSHIFT_DATA_DIR/bin/python3 $OPENSHIFT_DATA_DIR/bin/venv
 fi
 
 # Cleanup

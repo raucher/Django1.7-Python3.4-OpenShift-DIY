@@ -3,7 +3,7 @@
 # script. The application will work only if it binds to
 # $OPENSHIFT_DIY_IP:8080
 
-APP_NAME=`cat $OPENSHIFT_REPO_DIR/app_name`
+source $OPENSHIFT_DATA_DIR/bin/venv/bin/activate
+cd $OPENSHIFT_REPO_DIR
+python $OPENSHIFT_REPO_DIR/wsgi.py &
 
-source $OPENSHIFT_DATA_DIR/myvirtualenv/bin/activate
-uwsgi -s $OPENSHIFT_DIY_IP:8080 --socket-protocol http --chdir=$OPENSHIFT_REPO_DIR/$APP_NAME --module=$APP_NAME.wsgi:application -d $OPENSHIFT_DIY_LOG_DIR/app.log --pidfile $OPENSHIFT_TMP_DIR/uwsgi.pid

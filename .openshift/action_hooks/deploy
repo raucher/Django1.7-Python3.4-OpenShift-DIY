@@ -1,13 +1,20 @@
 #!/bin/bash
+# This deploy hook gets executed after dependencies are resolved and the
+# build hook has been run but before the application has been started back
+# up again.  This script gets executed directly, so it could be python, php,
+# ruby, etc.
 
-APP_NAME=`cat $OPENSHIFT_REPO_DIR/app_name`
+source $OPENSHIFT_DATA_DIR/bin/venv/bin/activate
 
-source $OPENSHIFT_DATA_DIR/myvirtualenv/bin/activate
-
-# If there isn't a database already
-if [ ! -f $OPENSHIFT_REPO_DIR/$APP_NAME/db.sqlite3 ]
+if [ ! -f $OPENSHIFT_DATA_DIR/db.sqlite3 ]
 then
-    "Running '/.manage.py migrate --noinput'; no admin username or password will be set."
-    $OPENSHIFT_REPO_DIR/$APP_NAME/manage.py migrate --noinput
+    echo "Copying $OPENSHIFT_REPO_DIR/wsgi/openshift/db.sqlite3 to $OPENSHIFT_DATA_DIR"
+    cp "$OPENSHIFT_REPO_DIR"wsgi/openshift/db.sqlite3 $OPENSHIFT_DATA_DIR
+    python "$OPENSHIFT_REPO_DIR".openshift/action_hooks/secure_db.py | tee ${OPENSHIFT_DATA_DIR}/CREDENTIALS
+else
+    echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/openshift/manage.py syncdb --noinput'"
+    python "$OPENSHIFT_REPO_DIR"wsgi/openshift/manage.py migrate --noinput
 fi
 
+echo "Executing 'python $OPENSHIFT_REPO_DIR/wsgi/openshift/manage.py collectstatic --noinput'"
+python "$OPENSHIFT_REPO_DIR"wsgi/openshift/manage.py collectstatic --noinput

@@ -1,10 +1,2 @@
 #!/bin/bash
-if [  -f $OPENSHIFT_TMP_DIR/uwsgi.pid ];
-then
-    if [[ `ps aux |grep $(cat $OPENSHIFT_TMP_DIR/uwsgi.pid)|grep -v grep` =~ ^$ ]];
-    then
-        echo "The app has already stopped"
-    else
-        kill `cat $OPENSHIFT_TMP_DIR/uwsgi.pid`
-    fi
-fi
+pkill python

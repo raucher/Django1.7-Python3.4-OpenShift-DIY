@@ -1,2 +1,4 @@
 Django==1.7
 uwsgi
+static3
+
